@@ -1,5 +1,5 @@
 # gRPC-Pololu-Handler
-Code used for a gRPC server written in C#. The code controls multiple Pololu controllers connected to servos and stepper motors. This repository is a copy of one service used in 
+Code used for a gRPC server written in C#. The code controls multiple Pololu controllers connected to servos and stepper motors. This repository is a copy of one service used in a project I'm currently developing.
 
 ### Prerequisites
 
