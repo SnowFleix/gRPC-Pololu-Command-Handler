@@ -3,7 +3,7 @@ Code used for a gRPC server written in C#. The code controls multiple Pololu con
 
 ### Prerequisites
 
-Some knowledge of gRPC
+Some knowledge of gRPC, .NET Framwork 4.7.2 and .NET Standard 1.5
 
 ### Installing
 
