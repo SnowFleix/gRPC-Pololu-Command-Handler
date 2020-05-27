@@ -1,0 +1,204 @@
+syntax = "proto3";
+
+package MachineCommandServiceProtoBuf;
+
+service MachineCommandService {
+
+    /// Start of rpcs for handling util requests
+
+    // A simple RPC
+    // Obtains all the machine ids of the machines that are not currently being used
+    rpc GetAvailableMachines(GetAvailableMachinesRequest) returns (GetAvailableMachinesResponse) {}
+
+    // A simple RPC
+    // Checks if the machine with the passed id is available, returns a bool
+    rpc CheckIfMachineIsAvailable(IsMachineAvailableRequest) returns (IsMachineAvailableResponse) {}
+
+    // A simple RPC
+    // Handles the user connecting to one of the machines and 
+    // returns a bool to verify they connected successfully
+    rpc ConnectToMachine(ConnectToMachineRequest) returns (ConnectToMachineResponse) {}
+
+    // A simple RPC
+    // Handles the user disconnecting from the machine
+    rpc DisconnectFromMachine(DisconnectFromMachineRequest) returns (DisconnectFromMachineResponse) {}
+    
+    /// end of rpcs for handling util request
+
+    /// Start of rpcs for handling the claw game movement
+
+    // A bidirectional streaming RPC
+    // Accepts a stream of move requests sent while a stream of fulfilled reponses
+    // are sent back to handle on the frontend
+    rpc MoveClaw(stream MoveRequest) returns (stream MoveResponse) {}
+
+    // A simple RPC
+    // Allows the user to drop the claw
+    rpc DropClaw(DropClawRequest) returns (DropClawResponse) {}
+
+    /// end of rpcs for handling claw game movement
+
+    /// Start of rpcs for handling the skiball 
+
+    // A bidirectional streaming RPC
+    // Accepts a stream of move requests sent while a stream of fulfilled reponses
+    // are sent back to handle on the frontend
+    rpc MoveCannon(stream MoveRequest) returns (stream MoveResponse) {}
+
+    // A simple RPC
+    // Handles the firing of the ski ball, returns a bool if it gets fired
+    rpc FireSkiBall(FireSkiBallRequest) returns (FireSkiBallResponse) {}
+
+    /// end of rpcs for handling the skiball
+
+    /// start of rpcs for testing servo movement
+
+    // A simple RPC 
+    // Tests if the client can move a servo over gRPC
+    rpc MoveServo(MoveTestRequest) returns (MoveTestResponse) {}
+
+    // A bidirectional streaming RPC
+    // Tests if the servo can handle a stream of inputs
+    rpc StreamMovementsTest(stream MoveTestRequest) returns (stream MoveTestResponse) {}
+
+    // A bidirectional streaming RPC
+    // Tests if tic controller can handle multiple move requests at once
+    rpc StreamMotorMovementsTest(stream MoveTestRequest) returns (stream MoveTestResponse) {}
+    /// end of rpcs for testing servo movement
+}
+
+/// start of messages used as objects
+message ClawMachine {
+    // the unique machine id 
+    string machineID = 1;
+    // either the live stream url or change this to the video feed
+    string videoFeed = 2;
+}
+
+message SkeeBallMachine {
+    // the unique machine id
+    string machineID = 1;
+    // either the live stream url or change this to the video feed
+    string videoFeed = 2;
+}
+
+message MilkBottleMachine {
+    // the unique machine id
+    string machineID = 1;
+    // either the live stream url or change this to the video feed
+    string videoFeed = 2;
+}
+/// end of messages used as objects
+
+// messages for util functions
+message GetAvailableMachinesRequest {
+    // the users unique session id
+    string sessionID = 1;
+}
+
+message GetAvailableMachinesResponse {
+    // shows all the available claw machine ids and their video stream
+    repeated ClawMachine AvailableClawMachines = 1;
+    // shows all the available milk bottle machines and their video streams
+    repeated MilkBottleMachine AvailableMilkBottleMachines = 2;
+    // shows all the skeeball machines and their video streams
+    repeated SkeeBallMachine AvailableSkeeBallMachines = 3;
+}
+
+message IsMachineAvailableRequest {
+    // the unique machine id the user wants to check if it's free
+    string machineID = 1;
+}
+
+message IsMachineAvailableResponse {
+    // bool response from the backend
+    bool isAvailable = 1;
+}
+
+message ConnectToMachineRequest {
+    // unique session id for the user
+    string sessionID = 1;
+    // the unique machine id that the user is attempting to connect to
+    string machineID = 2;
+}
+
+message ConnectToMachineResponse {
+    // return a bool to ensure no one else has connected to it
+    bool fulfilled = 1;
+}
+
+message DisconnectFromMachineRequest {
+    // unique session id for the user
+    string sessionID = 1;
+    // the unique machine id that the user is attempting to connect to
+    string machineID = 2;
+}
+
+message DisconnectFromMachineResponse {
+    // return a bool to ensure no one else has connected to it
+    bool fulfilled = 1;
+}
+// end of messages for util functions
+
+/// general machine messages 
+message MoveRequest {
+    // the users unique session id
+    string sessionID = 1;
+    // the unique machine id the user is currently using
+    string machineID = 2;
+    // which direction the user wants the claw to move
+    // 1 for left
+    // 2 for right
+    // 3 for forwards   - swivel left
+    // 4 for backwards  - swivel right
+    int32 direction = 3;
+}
+
+message MoveResponse {
+    // wether or not the backend program managed to move the claw
+    bool fulfilled = 1;
+}
+/// end of general machine messages
+
+// messages for controlling the claw game
+message DropClawRequest {
+    // the users unique session id
+    string sessionID = 1;
+    // the unique machine id the user is currently using
+    string machineID = 2;
+}
+
+message DropClawResponse {
+    // wether or not the backend program managed to move the claw
+    bool fulfilled = 1;
+}
+// end of messages for controlling the claw game
+
+/// messages for the skiballgame
+message FireSkiBallRequest {
+    // the users unique session id
+    string sessionID = 1;
+    // the unique machine id the user is currently using
+    string machineID = 2;
+}
+
+message FireSkiBallResponse {
+    bool fulfilled = 1;
+}
+/// end of messages for the skiballgame
+
+/// testing servo movement
+message MoveTestRequest {
+    // the target position of the servo
+    // 4000 is the minimum
+    // 8000 is the maximum
+    int32 targetPosition = 1;
+    // 
+    int32 targetServo = 2;
+}
+
+message MoveTestResponse {
+    // if the command got carried out
+    bool fulfilled = 1;
+}
+/// end of testing servo movement
