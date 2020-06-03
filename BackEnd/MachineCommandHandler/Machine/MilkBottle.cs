@@ -28,7 +28,7 @@ namespace MachineCommandHandler
             this.xMotor = xMotor;
             this.aimServo = aimingServo;
             this.fireServo = firingServo;
-            fireMotor.SetSpeed((int)BrushedDCMotor.CONSTANTS.MAX_SPEED);
+            this.fireMotor.SetSpeed((int)BrushedDCMotor.CONSTANTS.MAX_SPEED);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace MachineCommandHandler
         /// Checks if the cannon has enough ammo
         /// </summary>
         /// <returns> Returns a bool </returns> <!-- Explain more -->
-        /// <remarks> TODO: needs to be finished </remarks>
+        /// <remarks> TODO: needs to be finished, need to test hardware</remarks>
         private bool IsLoaded()
         {
             return true;
@@ -97,7 +97,7 @@ namespace MachineCommandHandler
         /// Checks if the user has won
         /// </summary>
         /// <returns></returns>
-        /// <remarks> TODO: needs to be finished </remarks>
+        /// <remarks> TODO: needs to be finished, need to test hardware</remarks>
         private bool PlayerWon()
         {
             return false;

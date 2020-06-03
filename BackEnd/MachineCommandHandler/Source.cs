@@ -58,7 +58,7 @@ namespace MachineCommandHandler
             Server server = new Server
             {
                 Services = { MachineCommandService.BindService(new CommandHandlerImpl()) },
-                Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) } // Needs to be changed later to a, have a better port and also to have a better ip/secure the connection
+                Ports = { new ServerPort("localhost", port, ServerCredentials.Insecure) }       // Needs to be changed later to a, have a better port and also to have a better ip/secure the connection
             };
             server.Start();
 

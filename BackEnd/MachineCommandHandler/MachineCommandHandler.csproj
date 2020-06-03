@@ -59,6 +59,10 @@
       <Project>{1187755f-cf2f-4b0d-afa9-03cfd580753e}</Project>
       <Name>CommandHandlerProtoBuffer</Name>
     </ProjectReference>
+    <ProjectReference Include="K:\pololu-usb-sdk-master\SimpleMotorController\Smc\Smc.csproj">
+      <Project>{4990bc43-b287-4af2-9eb7-a55bd40bdf85}</Project>
+      <Name>Smc</Name>
+    </ProjectReference>
     <ProjectReference Include="Sequencer\Sequencer.csproj">
       <Project>{2bcd2482-d498-45f1-9f97-96b7dcc529e9}</Project>
       <Name>Sequencer</Name>
